@@ -1,6 +1,10 @@
-class Header extends HTMLElement {
+customElements.define('header-component', class extends HTMLElement {
 	connectedCallback() {
-		this.innerHTML = `
+		//set shadow to open in order to perform events
+        //attach CSS because template is encapsulated 
+		this.attachShadow({ mode: 'open' });
+		this.shadowRoot.innerHTML = `
+			<link href="components/header.css" rel="stylesheet" type="text/css" />
 			<header>
 				<div class="header-inner">
 					<nav class="nav">
@@ -25,14 +29,12 @@ class Header extends HTMLElement {
 			</header>
 		`;
 		//toggle menu
-		const mobileNav = this.querySelector('#mobile-nav');
-		this.querySelector("#hamburger-icon").addEventListener('click', () => {
+		const mobileNav = this.shadowRoot.querySelector('#mobile-nav');
+		this.shadowRoot.querySelector("#hamburger-icon").addEventListener('click', () => {
 			mobileNav.style.height = "100%";
 		});
-		this.querySelector("#close-btn").addEventListener('click', () => {
+		this.shadowRoot.querySelector("#close-btn").addEventListener('click', () => {
 			mobileNav.style.height = "0%";
 		});
 	}
-}
-
-customElements.define('header-component', Header);
+});
